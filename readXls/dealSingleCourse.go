@@ -109,6 +109,7 @@ func dealSingleCourse(userID int, timePeriod int, weekday int, s string, db *gor
 	/* 遍历SOT */
 	for i := 0; i < 17; i++ {
 		if SOT[i] {
+			//这里可以修改为先拿到该网管的所有 OT 操作完之后再 db.Save
 			db.Model(&model.Occupation{}).Where("user_id = ? AND Week = ? AND Weekday = ? AND Time_Period = ?", userID, i, weekday, timePeriod).Update("Status", true)
 		}
 	}

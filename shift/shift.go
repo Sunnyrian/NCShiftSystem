@@ -2,7 +2,6 @@ package shift
 
 import (
 	"NCShiftSystem/model"
-	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -19,21 +18,19 @@ func Shift(db *gorm.DB, startDate string, endDate string) {
 	// 查询该时间段所有没有人值的班次
 	unshift, line := selectUnshift(db, startDate, endDate)
 	for i := int64(0); i < line; i++ {
+		// 将该班次的时间转换 UNIX -> human
 		//shiftDate, err := unshift[i].Date.Value()
 		//if err != nil {
 		//	fmt.Println(err)
 		//}
-		//var dutyHour []model.Dutyhour
-		//// 拿到值班时长
-		//db.Find(&dutyHour)
 		var SOT model.Occupation
 		// 查询出来谁有空
-		db.Where("week = ? AND weekDay = ? AND time_period = ? AND Status = false", unshift[i].Week, unshift[i].Weekday, unshift[i].TimePeriod).Joins("left join dutyhour on dutyhour.id = occupation.user_id").Find(&SOT)
 		// 和 dutyHour 表做做一个左连接
-
-		//fmt.Println(unshift[i].ID, shiftDate, unshift[i].Week, unshift[i].TimePeriod, unshift[i].Weekday, unshift[i].UserID)
-		fmt.Println(SOT)
+		db.Select("user_id").Order("dutyhour.dutyhour ASC").Where("week = ? AND weekDay = ? AND time_period = ? AND Status = false", unshift[i].Week, unshift[i].Weekday, unshift[i].TimePeriod).Joins("left join dutyhour on dutyhour.id = occupation.user_id").Find(&SOT)
+		unshift[i].UserID = SOT.UserID
+		db.Save(&unshift[i])
 	}
+	//db.Save(&unshift)
 }
 
 //查询所有班次

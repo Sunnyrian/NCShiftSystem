@@ -41,7 +41,7 @@ func GenerateShift(statDate string, endDate string, numPerShift string, week [7]
 			} else {
 				dayOfWeek = shiftConst.DayOfWeek
 			}
-			for ; k <= dayOfWeek; k++ {
+			for ; k < dayOfWeek || k == 0 && dayOfWeek == 0; k++ {
 				if week[k] == "-1" {
 
 				} else if week[k] == "0" {

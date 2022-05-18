@@ -2,7 +2,6 @@ package main
 
 import (
 	"NCShiftSystem/model"
-	"NCShiftSystem/readXls"
 	"NCShiftSystem/shift"
 	"fmt"
 	"time"
@@ -14,12 +13,17 @@ func main() {
 
 	db := model.ConnectToMySQL()
 	//根据数据库中的网管列表，在本地目录中读取 Xls，更新网管的 OT 表
-	shift.InitOccupation(db)
-	readXls.ReadAllXls(db)
+	//shift.InitOccupation(db)
+	//readXls.ReadAllXls(db)
 
-	//startDate := "2022-05-17"
-	//endDate := "2022-05-19"
-	//shift.Shift(db, startDate, endDate)
+	//生成排班表
+	//week := [7]string{"0", "0", "0", "0", "0", "1", "1"}
+	//shift.GenerateShift("2022-05-16", "2022-06-20", "2", week)
+
+	//排班
+	startDate := "2022-05-16"
+	endDate := "2022-06-20"
+	shift.Shift(db, startDate, endDate)
 
 	//web.StartWeb()
 	var end = time.Now()
