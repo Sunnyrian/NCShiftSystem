@@ -1,0 +1,54 @@
+{{ define "admin/index.html" }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+</head>
+<body>
+    <form action="/admin/shift" method="post" enctype="multipart/form-data">
+<!--    输入排班表要求 要排哪些班？ 哪天要排班？某天要排哪些班次，按节假日还是工作日？-->
+        开始排班时间: <input type="date" name="startDate" placeholder="2022/05/14">
+        排到什么时候: <input type="date" name="endDate" placeholder="2022/05/22">
+<!--    课表是从星期一开始的，合理星期日才是第一天！-->
+<!--        0表示工作日 1 表示休息日 -1 表示不上班-->
+        <p style="margin: 0">工作日&nbsp&nbsp&nbsp&nbsp&nbsp节假日  不上班</p>
+        <br/>
+<!--        label的作用是，当我们点击 label的时候，该label对应的radio会被选中-->
+        星期一<input type="radio" name="0" value="0" id="0" checked="checked">
+             <input type="radio" name="0" value="1">
+             <input type="radio" name="0" value="-1">
+        <br/>
+        星期二<input type="radio" name="1" value="0" checked="checked">
+             <input type="radio" name="1" value="1">
+             <input type="radio" name="1" value="-1">
+        <br/>
+        星期三<input type="radio" name="2" value="0" checked="checked">
+             <input type="radio" name="2" value="1">
+             <input type="radio" name="2" value="-1">
+        <br/>
+        星期四<input type="radio" name="3" value="0" checked="checked">
+             <input type="radio" name="3" value="1">
+             <input type="radio" name="3" value="-1">
+        <br/>
+        星期五<input type="radio" name="4" value="0" checked="checked">
+             <input type="radio" name="4" value="1">
+             <input type="radio" name="4" value="-1">
+        <br/>
+        星期六<input type="radio" name="5" value="0">
+             <input type="radio" name="5" value="1" checked="checked">
+             <input type="radio" name="5" value="-1">
+        <br/>
+        星期日<input type="radio" name="6" value="0">
+             <input type="radio" name="6" value="1" checked="checked">
+             <input type="radio" name="6" value="-1">
+        <br/>
+        一个班次排几个人？<input type="number"  id="numPerShift" name="numPerShift" placeholder="2">
+<!--        <input type="range" step="1" value="2" min="0" max="5" id="numPerShift" name="numPerShift" placeholder="2">-->
+        <input type="submit" value="开始排班！">
+    </form>
+</body>
+</html>
+
+{{ end }}
