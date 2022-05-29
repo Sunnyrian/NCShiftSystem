@@ -3,6 +3,7 @@ module NCShiftSystem
 go 1.17
 
 require (
+	github.com/gin-contrib/static v0.0.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/shakinm/xlsReader v0.9.10
 	github.com/xuri/excelize/v2 v2.5.0

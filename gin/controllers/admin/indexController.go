@@ -3,21 +3,23 @@ package admin
 import (
 	shiftConst "NCShiftSystem/const"
 	"NCShiftSystem/shift"
-	"NCShiftSystem/web/controllers/public"
+	//"NCShiftSystem/web/controllers/public"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
 type IndexController struct{
-	public.PublicController
+	//public.PublicController
 }
 
+// Index 返回主页面
 func (con IndexController) Index(c *gin.Context) {
 	//con.Success(c)
 	c.HTML(http.StatusOK, "admin/index.html",gin.H{})
 }
 
+// Shift Post方法传到后端排班参数
 func (con IndexController) Shift(c *gin.Context) {
 	// fixbug 一定要定义好数组长度
 	//weekday or holiday or not need to work
