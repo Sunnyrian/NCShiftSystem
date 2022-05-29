@@ -2,10 +2,10 @@ package admin
 
 import (
 	shiftConst "NCShiftSystem/const"
-	"NCShiftSystem/shift"
+	"net/http"
+
 	//"NCShiftSystem/web/controllers/public"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"strconv"
 )
 
@@ -13,11 +13,11 @@ type IndexController struct{
 	//public.PublicController
 }
 
-// Index 返回主页面
-func (con IndexController) Index(c *gin.Context) {
-	//con.Success(c)
-	c.HTML(http.StatusOK, "admin/index.html",gin.H{})
-}
+//// Index 返回主页面
+//func (con IndexController) Index(c *gin.Context) {
+//	//con.Success(c)
+//	c.HTML(http.StatusOK, "admin/index.html",gin.H{})
+//}
 
 // Shift Post方法传到后端排班参数
 func (con IndexController) Shift(c *gin.Context) {
@@ -45,5 +45,5 @@ func (con IndexController) Shift(c *gin.Context) {
 		"6" : week[6],
 		"numberPerShift" : numberPerShift,
 	})
-	shift.GenerateShift(startDate, endDate, numberPerShift, week)
+	//shift.GenerateShift(startDate, endDate, numberPerShift, week)
 }

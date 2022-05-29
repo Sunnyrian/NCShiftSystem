@@ -65,7 +65,9 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
+// const axios = require('axios')
 
 const user = reactive({
     stuID: '',
@@ -105,13 +107,26 @@ const validateNickname = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入昵称')) 
     } else {
+        axios.get('/portal/checkExist',{
+            params: {
+                value: value,
+                key: "nickname"
+            }
+        })
+        .then(function (response){
+        console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+        //查询有没有人注册过这个昵称
         if (user.checkPass != '') {
             if (!ruleFormRef.value) return
             ruleFormRef.value.validateField('checkPass', () => null)
         }
         callback()
     }
-    //查询有没有人注册过这个昵称
+
 }
 
 const validateName = (rule: any, value: any, callback: any) => {
