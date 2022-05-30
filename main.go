@@ -24,8 +24,6 @@ func main() {
 	//endDate := "2022-06-20"
 	//shift.Shift(db, startDate, endDate)
 
-
-
 	web.StartWeb()
 	var end = time.Now()
 	fmt.Println("程序运行了:", end.Sub(startTime))
@@ -47,8 +45,7 @@ func main() {
 //s := tool.StringDateToGromDate("2022-05-16")
 //fmt.Println(s)
 
-
 // 测试 checkUserExist
-//tool.CheckUserExist("guochuankun", "nickname")
-//tool.CheckUserExist("郭传坤", "name")
-//tool.CheckUserExist("guo", "nickname")
+//tool.CheckUserExist("nickname", "guochuankun")
+//tool.CheckUserExist("stuID", "")
+//tool.CheckUserExist("telephone", "218356477")

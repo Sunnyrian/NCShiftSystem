@@ -15,10 +15,11 @@ import (
 func StartWeb() {
 	//创建一个默认的路由引擎
 	r := gin.Default()
-	r.Use(static.Serve("/",static.LocalFile("./web/dist",false))).Use(Cors())
+	r.Use(static.Serve("/", static.LocalFile("./web/dist", false)))
+	//r.Use(Cors())
 	routers.AdminRoutersInit(r)
 	routers.PortalRouterInit(r)
-	err := r.Run(":80")
+	err := r.Run(":3500")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -61,4 +62,3 @@ func Cors() gin.HandlerFunc {
 		c.Next()
 	}
 }
-

@@ -124,6 +124,7 @@ const validateNickname = (rule: any, value: any, callback: any) => {
             if (!ruleFormRef.value) return
             ruleFormRef.value.validateField('checkPass', () => null)
         }
+        
         callback()
     }
 
