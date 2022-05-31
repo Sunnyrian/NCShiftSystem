@@ -11,7 +11,7 @@ func CheckUserExist(key string, val string) bool {
 	if val == "" {
 		return false
 	}
-	db := model.ConnectToMySQL()
+	db := model.DB
 	var user model.User
 	// check 一个 User 无非也就 check 学号 nickname 电话 邮箱
 	var result *gorm.DB

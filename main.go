@@ -2,6 +2,7 @@ package main
 
 import (
 	web "NCShiftSystem/gin"
+	"NCShiftSystem/model"
 	"fmt"
 	"time"
 )
@@ -10,7 +11,8 @@ import (
 func main() {
 	var startTime = time.Now()
 
-	//db := model.ConnectToMySQL()
+	db := model.ConnectToMySQL()
+	model.DB = db
 	//根据数据库中的网管列表，在本地目录中读取 Xls，更新网管的 OT 表
 	//shift.InitOccupation(db)
 	//readXls.ReadAllXls(db)

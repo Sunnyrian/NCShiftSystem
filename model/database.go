@@ -6,6 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func ConnectToMySQL() *gorm.DB {
 	//dsn := "root:ZA102_Minecraft@tcp(100.102.100.6:3306)/shift?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := "root:ZA102_Minecraft@tcp(100.88.1.4:3306)/shift?charset=utf8mb4&parseTime=True&loc=Local"

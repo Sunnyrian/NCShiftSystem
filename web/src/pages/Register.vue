@@ -63,7 +63,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import type { FormInstance } from 'element-plus'
+import { FormInstance, timelineItemProps } from 'element-plus'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -78,6 +78,8 @@ const user = reactive({
     telephone: '',
     email: '',
 })
+
+let exist : boolean
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -107,37 +109,27 @@ const validateNickname = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入昵称')) 
     } else {
-        axios.get('/portal/checkExist',{
-            params: {
-                value: value,
-                key: "nickname"
-            }
-        })
-        .then(function (response){
-        console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-        //查询有没有人注册过这个昵称
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+        checkExist("nickname", value).then( () => {
+            if (exist == true) {
+            callback(new Error('该用户名已被注册'))
         }
-        
+        // if (user.checkPass != '') {
+        //     if (!ruleFormRef.value) return
+        //     ruleFormRef.value.validateField('checkPass', () => null)
+        // }
         callback()
+        })
     }
-
 }
 
 const validateName = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的名字')) 
     } else {
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
-        }
+        // if (user.checkPass != '') {
+        //     if (!ruleFormRef.value) return
+        //     ruleFormRef.value.validateField('checkPass', () => null)
+        // }
         callback()
     }
 }
@@ -146,11 +138,16 @@ const validateStuID = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的学号')) 
     } else {
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+        checkExist("stuID", value).then( () => {
+            if (exist == true) {
+            callback(new Error('该学号已注册'))
         }
+        // if (user.stuID != '') {
+        //     if (!ruleFormRef.value) return
+        //     ruleFormRef.value.validateField('stuID', () => null)
+        // }
         callback()
+        })
     }
 }
 
@@ -158,11 +155,16 @@ const validateTel = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的电话')) 
     } else {
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+        checkExist("telephone", value).then( () => {
+            if (exist == true) {
+            callback(new Error('该电话已被注册'))
         }
+        // if (user.telephone != '') {
+        //     if (!ruleFormRef.value) return
+        //     ruleFormRef.value.validateField('telephone', () => null)
+        // }
         callback()
+        })
     }
 }
 
@@ -170,23 +172,16 @@ const validateEmail = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的邮箱')) 
     } else {
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+        checkExist("email", value).then( () => {
+            if (exist == true) {
+            callback(new Error('该邮箱已被注册'))
         }
+        // if (user.email != '') {
+        //     if (!ruleFormRef.value) return
+        //     ruleFormRef.value.validateField('email', () => null)
+        // }
         callback()
-    }
-}
-
-const validateEmail2 = (rule: any, value: any, callback: any) => {
-    if (value === '') {
-        callback(new Error('请输入您的邮箱')) 
-    } else {
-        if (user.checkPass != '') {
-            if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
-        }
-        callback()
+        })
     }
 }
 
@@ -217,7 +212,36 @@ const register = (form: FormInstance | undefined) => {
           return false
       }
   })
-  
+}
+
+
+async function checkExist(key : string, val : string){
+    //查询有没有人注册过这个昵称
+    try {
+        const response = await axios.get('/portal/checkExist',{
+        params: {
+            value: val,
+            key: key,
+        }
+        })
+        exist = <boolean>response.data.exist
+    } catch (error) {
+        console.error(error);
+    }
+    
+    // .then(function (response){
+    //     // user.exist = <boolean>response.data.exist
+    //     // console.log("status f:",user.exist)
+    //     // return status as boolean
+    // }   
+    // )
+    // .catch(function (error) {
+    //     console.log(error)
+    // });
+    
+    
+    // console.log("status:",status)
+    // return status as boolean
 }
 
 </script>
