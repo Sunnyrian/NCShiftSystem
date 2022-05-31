@@ -251,6 +251,8 @@ Name	string	`gorm:"column:name" json:"name"`
 Password	string	`gorm:"column:password" json:"password"`			
 Email	string	`gorm:"column:email" json:"email"`			
 Telephone	string	`gorm:"column:telephone" json:"telephone"`			
+Status	uint8	`gorm:"column:status" json:"status"`			
+Stuid	string	`gorm:"column:stuid" json:"stuid"`			
 }		
 
 // TableName get sql table name.获取数据库表名
@@ -266,14 +268,18 @@ var UserColumns = struct {
 	Name string
 	Password string
 	Email string
-	Telephone string    
+	Telephone string
+	Status string
+	Stuid string    
 	}{ 
 		ID:"id",  
 		Nickname:"nickname",  
 		Name:"name",  
 		Password:"password",  
 		Email:"email",  
-		Telephone:"telephone",             
+		Telephone:"telephone",  
+		Status:"status",  
+		Stuid:"stuid",             
 	}
 	
 

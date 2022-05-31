@@ -67,7 +67,6 @@ import { FormInstance, timelineItemProps } from 'element-plus'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
-// const axios = require('axios')
 
 const user = reactive({
     stuID: '',
@@ -113,10 +112,6 @@ const validateNickname = (rule: any, value: any, callback: any) => {
             if (exist == true) {
             callback(new Error('该用户名已被注册'))
         }
-        // if (user.checkPass != '') {
-        //     if (!ruleFormRef.value) return
-        //     ruleFormRef.value.validateField('checkPass', () => null)
-        // }
         callback()
         })
     }
@@ -126,10 +121,6 @@ const validateName = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的名字')) 
     } else {
-        // if (user.checkPass != '') {
-        //     if (!ruleFormRef.value) return
-        //     ruleFormRef.value.validateField('checkPass', () => null)
-        // }
         callback()
     }
 }
@@ -142,10 +133,6 @@ const validateStuID = (rule: any, value: any, callback: any) => {
             if (exist == true) {
             callback(new Error('该学号已注册'))
         }
-        // if (user.stuID != '') {
-        //     if (!ruleFormRef.value) return
-        //     ruleFormRef.value.validateField('stuID', () => null)
-        // }
         callback()
         })
     }
@@ -159,10 +146,6 @@ const validateTel = (rule: any, value: any, callback: any) => {
             if (exist == true) {
             callback(new Error('该电话已被注册'))
         }
-        // if (user.telephone != '') {
-        //     if (!ruleFormRef.value) return
-        //     ruleFormRef.value.validateField('telephone', () => null)
-        // }
         callback()
         })
     }
@@ -176,10 +159,6 @@ const validateEmail = (rule: any, value: any, callback: any) => {
             if (exist == true) {
             callback(new Error('该邮箱已被注册'))
         }
-        // if (user.email != '') {
-        //     if (!ruleFormRef.value) return
-        //     ruleFormRef.value.validateField('email', () => null)
-        // }
         callback()
         })
     }
@@ -207,6 +186,17 @@ const register = (form: FormInstance | undefined) => {
   form.validate((valid) => {
       if (valid) {
           console.log('submit!')
+          axios.post('/portal/register',{
+            params: {
+                nickname: user.nickname,
+                name: user.name,
+                //这里密码要加盐
+                // password: user.password,
+                stuID: user.stuID,
+                telephone: user.telephone,
+                email: user.email,
+            }
+          })
       } else {
           console.log('error submit!')
           return false
@@ -240,8 +230,6 @@ async function checkExist(key : string, val : string){
     // });
     
     
-    // console.log("status:",status)
-    // return status as boolean
 }
 
 </script>

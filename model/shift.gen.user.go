@@ -1,8 +1,8 @@
 package	model	
 import (	
+"gorm.io/gorm"	
 "fmt"	
 "context"	
-"gorm.io/gorm"	
 )	
 
 type _UserMgr struct {
@@ -80,6 +80,16 @@ func (obj *_UserMgr) WithEmail(email string) Option {
 // WithTelephone telephone获取 
 func (obj *_UserMgr) WithTelephone(telephone string) Option {
 	return optionFunc(func(o *options) { o.query["telephone"] = telephone })
+}
+
+// WithStatus status获取 
+func (obj *_UserMgr) WithStatus(status uint8) Option {
+	return optionFunc(func(o *options) { o.query["status"] = status })
+}
+
+// WithStuid stuid获取 
+func (obj *_UserMgr) WithStuid(stuid string) Option {
+	return optionFunc(func(o *options) { o.query["stuid"] = stuid })
 }
 
 
@@ -219,6 +229,34 @@ func (obj *_UserMgr) GetFromTelephone(telephone string) (results []*User, err er
 // GetBatchFromTelephone 批量查找 
 func (obj *_UserMgr) GetBatchFromTelephone(telephones []string) (results []*User, err error) {
 	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`telephone` IN (?)", telephones).Find(&results).Error
+	
+	return
+}
+ 
+// GetFromStatus 通过status获取内容  
+func (obj *_UserMgr) GetFromStatus(status uint8) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`status` = ?", status).Find(&results).Error
+	
+	return
+}
+
+// GetBatchFromStatus 批量查找 
+func (obj *_UserMgr) GetBatchFromStatus(statuss []uint8) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`status` IN (?)", statuss).Find(&results).Error
+	
+	return
+}
+ 
+// GetFromStuid 通过stuid获取内容  
+func (obj *_UserMgr) GetFromStuid(stuid string) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` = ?", stuid).Find(&results).Error
+	
+	return
+}
+
+// GetBatchFromStuid 批量查找 
+func (obj *_UserMgr) GetBatchFromStuid(stuids []string) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` IN (?)", stuids).Find(&results).Error
 	
 	return
 }
