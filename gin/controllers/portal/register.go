@@ -5,27 +5,43 @@ import (
 	"NCShiftSystem/model"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
+
+
+type registerForm struct {
+	Nickname string `json:"nickname"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	StuID string `json:"stuID"`
+	Telephone string `json:"telephone"`
+	Email string `json:"email"`
+}
 
 func (con Controller) Register(c *gin.Context) {
 	db := model.DB
-	nickname := c.Query("nickname")
-	password := c.Query("password")
-	name := c.Query("name")
-	stuID := c.Query("stuID")
-	telephone := c.Query("telephone")
-	email := c.Query("email")
-	status := shiftConst.DefaultStatus
-	fmt.Println("nickname:"+nickname)
-	user := model.User{
-		Name: name,
-		Nickname: nickname,
-		Password: password,
-		Stuid: stuID,
-		Telephone: telephone,
-		Email: email,
-		Status: status,
+	var form registerForm
+	err := c.ShouldBind(&form)
+	if err != nil || form.Name == ""{
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": false,
+		})
+	} else {
+		status := shiftConst.DefaultStatus
+		user := model.User{
+			Name: form.Name,
+			Nickname: form.Nickname,
+			Password: form.Password,
+			Stuid: form.StuID,
+			Telephone: form.Telephone,
+			Email: form.Email,
+			Status: status,
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"success": true,
+		})
+		fmt.Println(user)
+		db.Create(&user)
 	}
-	fmt.Println(user)
-	db.Create(&user)
 }

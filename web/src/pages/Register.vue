@@ -63,9 +63,11 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { FormInstance, timelineItemProps } from 'element-plus'
+import { ElMessage, FormInstance, timelineItemProps } from 'element-plus'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import sha256 from 'crypto-js/sha256'
+import Base64 from 'crypto-js/enc-base64'
 
 
 const user = reactive({
@@ -141,6 +143,8 @@ const validateStuID = (rule: any, value: any, callback: any) => {
 const validateTel = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入您的电话')) 
+    } else if (value.length != 11){
+        callback(new Error('请输入正确的大陆号码'))
     } else {
         checkExist("telephone", value).then( () => {
             if (exist == true) {
@@ -181,22 +185,53 @@ const login = () => {
     router.push('/Login')
 }
 
+
 const register = (form: FormInstance | undefined) => {
+
   if (!form) return
   form.validate((valid) => {
       if (valid) {
-          console.log('submit!')
-          axios.post('/portal/register',{
-            params: {
-                nickname: user.nickname,
-                name: user.name,
-                //这里密码要加盐
-                // password: user.password,
-                stuID: user.stuID,
-                telephone: user.telephone,
-                email: user.email,
+        console.log('submit!')
+        console.log(sha256(user.password+user.nickname+user.name))
+        var data = JSON.stringify({
+            "nickname": user.nickname,
+            "name": user.name,
+            "password": Base64.stringify(sha256(user.stuID+user.password+user.stuID)),
+            "stuID": user.stuID,
+            "telephone": user.telephone,
+            "email": user.email,
+            });
+
+        var config = {
+        method: 'post',
+        url: '/portal/register',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+        // console.log(JSON.stringify(response.data));
+            if (response.data.success == true) {
+                ElMessage({
+                    message: "注册成功!",
+                    type: 'success',
+                })
+                router.push('/Login')
+            } else {
+                ElMessage({
+                    message: "注册失败!",
+                    type: 'error',
+                })
             }
-          })
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
+
       } else {
           console.log('error submit!')
           return false
