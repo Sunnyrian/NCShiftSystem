@@ -191,8 +191,6 @@ const register = (form: FormInstance | undefined) => {
   if (!form) return
   form.validate((valid) => {
       if (valid) {
-        console.log('submit!')
-        console.log(sha256(user.password+user.nickname+user.name))
         var data = JSON.stringify({
             "nickname": user.nickname,
             "name": user.name,
@@ -204,7 +202,7 @@ const register = (form: FormInstance | undefined) => {
 
         var config = {
         method: 'post',
-        url: '/portal/register',
+        url: '/portalApi/register',
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -243,7 +241,7 @@ const register = (form: FormInstance | undefined) => {
 async function checkExist(key : string, val : string){
     //查询有没有人注册过这个昵称
     try {
-        const response = await axios.get('/portal/checkExist',{
+        const response = await axios.get('/portalApi/checkExist',{
         params: {
             value: val,
             key: key,

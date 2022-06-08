@@ -6,7 +6,7 @@ import (
 )
 
 func PortalRouterInit(r *gin.Engine) {
-	portalRouters := r.Group("/portal")
+	portalRouters := r.Group("/portalApi")
 	{
 		portalRouters.GET("/checkExist", portal.Controller{}.CheckUserExist)
 		portalRouters.POST("/register", portal.Controller{}.Register)

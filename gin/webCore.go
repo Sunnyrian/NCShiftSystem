@@ -1,6 +1,7 @@
 package web
 
 import (
+	"NCShiftSystem/gin/middlewares"
 	"NCShiftSystem/gin/routers"
 	// "NCShiftSystem/web/models"
 	// "NCShiftSystem/web/routers"
@@ -17,8 +18,9 @@ func StartWeb() {
 	r := gin.Default()
 	r.Use(static.Serve("/", static.LocalFile("./web/dist", false)))
 	//r.Use(Cors())
-	routers.AdminRoutersInit(r)
 	routers.PortalRouterInit(r)
+	r.Use(middlewares.JwtAuth())
+	routers.AdminRoutersInit(r)
 	err := r.Run(":3500")
 	if err != nil {
 		fmt.Println(err)
