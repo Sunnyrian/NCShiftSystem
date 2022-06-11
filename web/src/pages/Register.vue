@@ -65,10 +65,9 @@
 import { reactive, ref } from 'vue'
 import { ElMessage, FormInstance, timelineItemProps } from 'element-plus'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import sha256 from 'crypto-js/sha256'
 import Base64 from 'crypto-js/enc-base64'
-
+import axios from 'axios'
 
 const user = reactive({
     stuID: '',

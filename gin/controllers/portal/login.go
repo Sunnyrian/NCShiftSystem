@@ -18,8 +18,6 @@ func (con Controller) Login(c *gin.Context) {
 	var form loginForm
 	err := c.ShouldBind(&form)
 	var user model.User
-	fmt.Println("233")
-	fmt.Println(form)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -33,9 +31,10 @@ func (con Controller) Login(c *gin.Context) {
 				})
 				return
 			}
+			fmt.Println(token)
 			c.JSON(http.StatusOK, gin.H{
 				"success": true,
-				"data": gin.H{"token": token},
+				"token": token,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{

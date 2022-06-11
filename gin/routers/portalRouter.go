@@ -11,5 +11,6 @@ func PortalRouterInit(r *gin.Engine) {
 		portalRouters.GET("/checkExist", portal.Controller{}.CheckUserExist)
 		portalRouters.POST("/register", portal.Controller{}.Register)
 		portalRouters.POST("/login", portal.Controller{}.Login)
+		portalRouters.POST("/checkLogin", portal.Controller{}.CheckLogin)
 	}
 }
