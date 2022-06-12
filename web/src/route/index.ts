@@ -37,29 +37,40 @@ const router = createRouter({
 let loginStatus:boolean
 
 router.beforeEach((to, from) => {
+
     let token = localStorage.getItem('token')
     console.log("beforeEach~")
-    console.log("loginStatus:",loginStatus)
-    // token ===null || token === '' && 
-    if (token === null || token === '') {
-        if (to.name !== 'Login') {
+    if ( to.name != 'Login'){
+        if (token === null || token === '') {
             return { name: 'Login'}
         } else {
-            console.log("haihaihai")
+            checkLogin(token).then( () => {
+            changeRouteToLogin(loginStatus)
+            })
         }
     } else {
-        console.log("loginStatus(else):",loginStatus)
         checkLogin(token).then( () => {
-            if(!loginStatus){
-                console.log("让我check check")
-                return { name: 'Login'}
-            }
+            changeRouteToHome(loginStatus)
         })
     }
     
 })
 
-async function checkLogin(token: string) {
+function changeRouteToLogin (loginStatus: boolean) {
+    // 如果没登录
+    if(!loginStatus) {
+        router.push('/Login')
+    }
+}
+
+function changeRouteToHome (loginStatus: boolean) {
+    // 如果登录了
+    if(loginStatus) {
+        router.push('/Home')
+    }
+}
+
+async function checkLogin(token: string|null) {
     var data = JSON.stringify({
     "token": token
     });
@@ -73,15 +84,13 @@ async function checkLogin(token: string) {
     data : data
     };
 
-    axios(config)
+    await axios(config)
     .then(function (response:any) {
-        console.log(JSON.stringify(response.data));
-        response.data.success = loginStatus
+        loginStatus = response.data.success
     })
     .catch(function (error:any) {
     console.log(error);
     });
-    
 }
 
 
