@@ -2,9 +2,10 @@ import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw} f
 
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
-import Home from '../pages/Index.vue';
-import { tr } from 'element-plus/lib/locale';
+import Home from '../pages/Index.vue'
+import { tr } from 'element-plus/lib/locale'
 import axios from 'axios'
+import cookie from '../api/index.js'
 
 const routes: Array<RouteRecordRaw> = [
     {   
@@ -38,18 +39,18 @@ let loginStatus:boolean
 
 router.beforeEach((to, from) => {
 
-    let token = localStorage.getItem('token')
+    let token = cookie.get("token")
     console.log("beforeEach~")
-    if ( to.name != 'Login'){
-        if (token === null || token === '') {
+    if ( to.name != 'Login' && to.name != 'Register'){
+        if (token === null) {
             return { name: 'Login'}
         } else {
-            checkLogin(token).then( () => {
+            checkLogin().then( () => {
             changeRouteToLogin(loginStatus)
             })
         }
     } else {
-        checkLogin(token).then( () => {
+        checkLogin().then( () => {
             changeRouteToHome(loginStatus)
         })
     }
@@ -70,18 +71,11 @@ function changeRouteToHome (loginStatus: boolean) {
     }
 }
 
-async function checkLogin(token: string|null) {
-    var data = JSON.stringify({
-    "token": token
-    });
+async function checkLogin() {
 
     var config = {
-    method: 'post',
+    method: 'get',
     url: 'portalApi/checkLogin',
-    headers: { 
-        'Content-Type': 'application/json'
-    },
-    data : data
     };
 
     await axios(config)

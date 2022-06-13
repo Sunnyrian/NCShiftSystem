@@ -31,7 +31,7 @@ func (con Controller) Login(c *gin.Context) {
 				})
 				return
 			}
-			fmt.Println(token)
+			c.SetCookie("token", token, 10800, "", "", false, true)
 			c.JSON(http.StatusOK, gin.H{
 				"success": true,
 				"token": token,

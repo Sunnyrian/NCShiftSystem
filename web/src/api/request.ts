@@ -18,9 +18,5 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   });
 
-function getUserInformation(token :string) {
-   
-}
 
-
-export default instance
+export default instance;

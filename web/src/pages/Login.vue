@@ -103,8 +103,6 @@ const login = (form: FormInstance | undefined) => {
               message: "登录成功!",
               type: 'success',
           })
-          userToken = response.data.token
-          localStorage.setItem('token', userToken)
           router.push('/Home')
         } else {
           ElMessage({

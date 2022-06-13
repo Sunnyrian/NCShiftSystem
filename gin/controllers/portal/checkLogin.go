@@ -2,23 +2,20 @@ package portal
 
 import (
 	"NCShiftSystem/jwt"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-type checkLoginForm struct {
-	Token string `json:"token"`
-}
 
 func (con Controller) CheckLogin(c *gin.Context) {
-	var form checkLoginForm
-	err := c.ShouldBind(&form)
+	token, err := c.Cookie("token")
 	if err != nil{
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"success:": false,
+			"err": err,
+		})
 	} else {
-		fmt.Println(form.Token)
-		_, err := jwt.ParseToken(form.Token)
+		_, err := jwt.ParseToken(token)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,

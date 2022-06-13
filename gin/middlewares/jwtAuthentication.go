@@ -10,7 +10,7 @@ import (
 
 func JwtAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		authHeader := c.Request.Header.Get("Authorization")
+		authHeader := c.Request.Header.Get("Cookie")
 		if authHeader == "" {
 			c.JSON(http.StatusOK, gin.H{
 				"code": -1,
@@ -19,11 +19,12 @@ func JwtAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		log.Print("token", authHeader)
+
 
 		// 按空格拆分
-		parts := strings.SplitN(authHeader, " ", 2)
-		if !(len(parts) == 2 && parts[0] == "Bearer") {
+		token := strings.Split(authHeader, "token=")
+		log.Print("token:", token[1])
+		if token[1] == "" {
 			c.JSON(http.StatusOK, gin.H{
 				"code": -1,
 				"msg": "请求头中auth格式有误",
@@ -31,9 +32,8 @@ func JwtAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-
-		// 解析 token 包含的信息
-		claims, err := jwt.ParseToken(parts[1])
+		//解析 token 包含的信息
+		claims, err := jwt.ParseToken(token[1])
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": -1,
@@ -42,6 +42,7 @@ func JwtAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
 
 		c.Set("claims", claims)
 		c.Next()

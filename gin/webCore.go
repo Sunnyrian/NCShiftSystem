@@ -20,6 +20,7 @@ func StartWeb() {
 	//r.Use(Cors())
 	routers.PortalRouterInit(r)
 	r.Use(middlewares.JwtAuth())
+	routers.UserRouterInit(r)
 	routers.AdminRoutersInit(r)
 	err := r.Run(":3500")
 	if err != nil {
@@ -40,7 +41,7 @@ func Cors() gin.HandlerFunc {
 			//允许跨域设置可以返回其他子段，可以自定义字段
 			//该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma。
 			//如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。上面的例子指定，getResponseHeader('FooBar')可以返回FooBar字段的值。
-			c.Header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-CSRF-Token, Token, session")
+			c.Header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-CSRF-Token, Token, session, Cookie")
 			// 允许浏览器（客户端）可以解析的头部 （重要）
 			c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers")
 			//设置缓存时间
