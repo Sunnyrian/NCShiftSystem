@@ -1,6 +1,23 @@
-
-
-let cookie = {
+  let cookie = {
+    /**
+   * 设置cookie方法
+   * @param key{string} cookie名称
+   * @param val{string} cookie值
+   * @param hours{number} 过期时间（小时）
+   */
+      set: function (key: string, val: string, hours: number) {
+      let date = new Date(); //获取当前时间
+      let expiresHours = hours;  //将date设置为n小时以后的时间
+      date.setTime(date.getTime() + expiresHours * 24 * 3600 * 1000); //格式化为cookie识别的时间
+      document.cookie = key + "=" + val + ";expires=" + date.toUTCString();  //设置cookie
+    },
+    /**
+     * 移除cookie方法
+     * @param key{string} cookie名称
+     */
+    remove: function (key: string) {
+      document.cookie = 'token=;expires=Thu, 01-Jan-1970 00:00:01 GMT';
+    },
     get: function (key:string) {//获取cookie方法
       /*获取cookie参数*/
       let getCookie = document.cookie.replace(/[ ]/g, "");  

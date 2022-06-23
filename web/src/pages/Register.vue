@@ -251,17 +251,6 @@ async function checkExist(key : string, val : string){
         console.error(error);
     }
     
-    // .then(function (response){
-    //     // user.exist = <boolean>response.data.exist
-    //     // console.log("status f:",user.exist)
-    //     // return status as boolean
-    // }   
-    // )
-    // .catch(function (error) {
-    //     console.log(error)
-    // });
-    
-    
 }
 
 </script>

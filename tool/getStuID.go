@@ -6,10 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
-// CheckUserExist 判断这个用户是否已经存在
-func CheckUserExist(key string, val string) bool {
+// GetStuID 由 unique 键获取 stuID
+func GetStuID(key string, val string) string {
 	if val == "" {
-		return false
+		return ""
 	}
 	db := model.DB
 	var user model.User
@@ -19,7 +19,7 @@ func CheckUserExist(key string, val string) bool {
 	case "nickname":
 		result = db.Where("nickname = ?", val).Find(&user)
 	case "stuID":
-		result = db.Where("stuid = ?", val).Find(&user)
+		result = db.Where("id = ?", val).Find(&user)
 	case "telephone":
 		result = db.Where("telephone = ?", val).Find(&user)
 	case "email":
@@ -37,8 +37,8 @@ func CheckUserExist(key string, val string) bool {
 	//fmt.Println(&user)
 	if result.RowsAffected == 0 {
 		// 返回不存在
-		return false
+		return ""
 	} else {
-		return true
+		return user.Stuid
 	}
 }

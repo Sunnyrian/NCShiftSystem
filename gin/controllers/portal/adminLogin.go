@@ -8,22 +8,22 @@ import (
 	"net/http"
 )
 
-type loginForm struct {
-	StuID string `json:"stuID"`
+type adminLoginForm struct {
+	Nickname string `json:"nickname"`
 	Password string `json:"password"`
 }
 
-func (con Controller) Login(c *gin.Context) {
+func (con Controller) AdminLogin(c *gin.Context) {
 	db := model.DB
-	var form loginForm
+	var form adminLoginForm
 	err := c.ShouldBind(&form)
-	var user model.User
+	var admin model.AdminUser
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		db.Where("stuid = ?", form.StuID).Find(&user)
-		if user.Password == form.Password {
-			token, err := jwt.GenerateToken(form.StuID)
+		db.Where("nickname = ?", form.Nickname).Find(&admin)
+		if admin.Password == form.Password {
+			token, err := jwt.GenerateToken(form.Nickname)
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"code": -1,

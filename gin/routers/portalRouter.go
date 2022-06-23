@@ -12,5 +12,7 @@ func PortalRouterInit(r *gin.Engine) {
 		portalRouters.POST("/register", portal.Controller{}.Register)
 		portalRouters.POST("/login", portal.Controller{}.Login)
 		portalRouters.GET("/checkLogin", portal.Controller{}.CheckLogin)
+		portalRouters.GET("/getStuID", portal.Controller{}.GetStuID)
+		portalRouters.POST("/adminLogin", portal.Controller{}.AdminLogin)
 	}
 }

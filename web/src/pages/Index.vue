@@ -7,15 +7,17 @@
         <el-button class="button" text>Operation button</el-button>
       </div>
     </template>
-    <div>{{user.email}}</div>
-    <div>{{user.stuID}}</div>
-    <div>{{user.nickname}}</div>
-    <div>{{user.telephone}}</div>
+    <div>email:{{user.email}}</div>
+    <div>学号:{{user.stuID}}</div>
+    <div>昵称:{{user.nickname}}</div>
+    <div>电话:{{user.telephone}}</div>
+    <el-button type="primary" plain @click="logOut">退出登录</el-button>
   </el-card>
 </template>
 
 <script lang="ts" setup>
   import { reactive, ref } from 'vue'
+  import { RouterLink, useRouter } from 'vue-router'
   import {
   Check,
   Delete,
@@ -25,7 +27,10 @@
   Star,
   } from '@element-plus/icons-vue'
   import axios from 'axios'
-  
+  import cookie from '../api/cookie'
+
+
+  const router = useRouter()
 
   const user = reactive({
     stuID: '',
@@ -44,7 +49,6 @@
     };
     axios(config)
     .then(function (response) {
-      console.log(response)
       user.stuID = response.data.stuID
       user.name  = response.data.name
       user.nickname = response.data.nickname
@@ -56,6 +60,10 @@
     });
   }
   
+  function logOut() {
+    cookie.remove("token")
+    router.push('/Login')
+  }
   
 </script>
 

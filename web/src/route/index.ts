@@ -3,9 +3,12 @@ import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw} f
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import Home from '../pages/Index.vue'
+import Admin from '../pages/Admin.vue';
+
 import { tr } from 'element-plus/lib/locale'
 import axios from 'axios'
-import cookie from '../api/index.js'
+import cookie from '../api/cookie.js'
+
 
 const routes: Array<RouteRecordRaw> = [
     {   
@@ -28,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: Home,
     },
+    {
+        path: '/Admin',
+        name: 'Admin',
+        component: Admin,
+    }
 ]
 
 const router = createRouter({
