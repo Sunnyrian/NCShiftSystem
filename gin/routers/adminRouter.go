@@ -11,6 +11,7 @@ func AdminRoutersInit(r *gin.Engine)  {
 	adminRouters := r.Group("/adminApi")
 	{
 		//adminRouters.GET("/",admin.IndexController{}.Index)
-		adminRouters.POST("/shift",admin.IndexController{}.Shift)
+		adminRouters.POST("/shift",admin.Controller{}.Shift)
+		adminRouters.GET("/NAList",admin.Controller{}.GetNAList)
 	}
 }

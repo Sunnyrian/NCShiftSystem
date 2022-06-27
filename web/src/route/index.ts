@@ -4,6 +4,8 @@ import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import Home from '../pages/Index.vue'
 import Admin from '../pages/Admin.vue';
+import NAList from '../components/NAList.vue';
+import NotFound from '../pages/NotFound.vue'
 
 import { tr } from 'element-plus/lib/locale'
 import axios from 'axios'
@@ -15,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: '/',
         redirect: '/Login',
+    },
+    { 
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound,
     },
     {
         path: '/Login',
@@ -35,7 +42,14 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Admin',
         name: 'Admin',
         component: Admin,
-    }
+        children: [
+            {
+                path: 'NAList',
+                name: 'NAList',
+                component: NAList,
+            }
+        ]
+    },
 ]
 
 const router = createRouter({

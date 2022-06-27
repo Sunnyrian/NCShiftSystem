@@ -14,9 +14,12 @@ type Controller struct {
 
 // GetUserInformation 解析token获取用户信息返回
 func (con Controller) GetUserInformation(c *gin.Context) {
+	// 从请求头获取 Cookie
 	authHeader := c.Request.Header.Get("Cookie")
+	// 分离出 Token
 	parts := strings.Split(authHeader, "token=")
 	token := parts[1]
+	// 解析 Token
 	claims, err := jwt.ParseToken(token)
 	if err != nil{
 		fmt.Println(err)

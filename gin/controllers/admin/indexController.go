@@ -9,18 +9,18 @@ import (
 	"strconv"
 )
 
-type IndexController struct{
-	//public.PublicController
+type Controller struct{
+
 }
 
 //// Index 返回主页面
-//func (con IndexController) Index(c *gin.Context) {
+//func (con Controller) Index(c *gin.Context) {
 //	//con.Success(c)
 //	c.HTML(http.StatusOK, "admin/index.html",gin.H{})
 //}
 
 // Shift Post方法传到后端排班参数
-func (con IndexController) Shift(c *gin.Context) {
+func (con Controller) Shift(c *gin.Context) {
 	// fixbug 一定要定义好数组长度
 	//weekday or holiday or not need to work
 	var week [shiftConst.DayOfWeek]string
