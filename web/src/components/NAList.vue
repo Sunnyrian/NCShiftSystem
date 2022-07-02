@@ -1,48 +1,62 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%"
-    :row-class-name="tableRowClassName"
-  >
+    <el-table-v2
+        :columns="columns"
+        :data="tableData"
+        :width="1000"
+        :height="600"
+        fixed
+    />
     
-    <el-table-column prop="name" label="姓名" width="180" />
-    <el-table-column prop="stuID" label="学号" width="180" />
-    <el-table-column prop="nickname" label="昵称" width="180" />
-    <el-table-column prop="telephone" label="电话" width="180" />
-    <el-table-column prop="email" label="邮箱" width="180"/>
-    <el-table-column prop="status" label="账号状态" width="180" />
-  </el-table>
+
 </template>
 
 <script lang="ts" setup>
     import axios from 'axios'
     import { reactive, ref } from 'vue'
 
-    interface User {
-    name: string
-    stuID: string
-    nickname: string
-    email: string
-    telephone: string
-    status: boolean
-    }
+    const columns = [
+        {
+            dataKey: "name",
+            key: "name",
+            title: "姓名",
+            width: 150,
+        },
+        {
+            dataKey: "stuid",
+            key: "stuid",
+            title: "学号",
+            width: 150,
+        },
+        {
+            dataKey: "nickname",
+            key: "nickname",
+            title: "昵称",
+            width: 150,
+        },
+        {
+            dataKey: "telephone",
+            key: "telephone",
+            title: "电话",
+            width: 150,
+        },
+        {
+            dataKey: "email",
+            key: "email",
+            title: "邮箱",
+            width: 150,
+        },
+        {
+            dataKey: "status",
+            key: "status",
+            title: "账号状态",
+            width: 150,
+        },
+    ]
 
-    const tableRowClassName = ({
-    row,
-    rowIndex,
-    }: {
-    row: User
-    rowIndex: number
-    }) => {
-    if (rowIndex === 1) {
-        return 'warning-row'
-    } else if (rowIndex === 3) {
-        return 'success-row'
-    }
-    return ''
-    }
+    let tableData = ref([])
 
-    getNAList()
+
+
 
     function getNAList() {
         var config = {
@@ -52,21 +66,17 @@
 
         axios(config)
         .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        const tableData: User[] = response.data
+          console.log(response.data)
+          // tableData = [];
+          // for ( var i = 0; i < response.data.length; i++) {
+          //   tableData.push(response.data[i])
+          // }
+          tableData.value = response.data
+          console.log(tableData)
         })
         .catch(function (error) {
         console.log(error);
         });
     }
-
+    getNAList()
 </script>
-
-<style>
-    .el-table .warning-row {
-    --el-table-tr-bg-color: var(--el-color-warning-light-9);
-    }
-    .el-table .success-row {
-    --el-table-tr-bg-color: var(--el-color-success-light-9);
-    }
-</style>

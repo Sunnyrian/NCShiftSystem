@@ -6,6 +6,7 @@ import Home from '../pages/Index.vue'
 import Admin from '../pages/Admin.vue';
 import NAList from '../components/NAList.vue';
 import NotFound from '../pages/NotFound.vue'
+import VirtualTable from '../components/VirtualTable.vue'
 
 import { tr } from 'element-plus/lib/locale'
 import axios from 'axios'
@@ -47,7 +48,12 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'NAList',
                 name: 'NAList',
                 component: NAList,
-            }
+            },
+            {
+                path: 'VirtualTable',
+                name: 'VirtualTable',
+                component: VirtualTable,
+            },
         ]
     },
 ]
