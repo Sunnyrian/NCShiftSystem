@@ -57,6 +57,11 @@ func (obj *_UserMgr) WithID(id int) Option {
 	return optionFunc(func(o *options) { o.query["id"] = id })
 }
 
+// WithStuid stuid获取 
+func (obj *_UserMgr) WithStuid(stuid string) Option {
+	return optionFunc(func(o *options) { o.query["stuid"] = stuid })
+}
+
 // WithNickname nickname获取 
 func (obj *_UserMgr) WithNickname(nickname string) Option {
 	return optionFunc(func(o *options) { o.query["nickname"] = nickname })
@@ -85,11 +90,6 @@ func (obj *_UserMgr) WithTelephone(telephone string) Option {
 // WithStatus status获取 
 func (obj *_UserMgr) WithStatus(status uint8) Option {
 	return optionFunc(func(o *options) { o.query["status"] = status })
-}
-
-// WithStuid stuid获取 
-func (obj *_UserMgr) WithStuid(stuid string) Option {
-	return optionFunc(func(o *options) { o.query["stuid"] = stuid })
 }
 
 
@@ -159,6 +159,20 @@ func (obj *_UserMgr)  GetFromID(id int) (result User, err error) {
 // GetBatchFromID 批量查找 
 func (obj *_UserMgr) GetBatchFromID(ids []int) (results []*User, err error) {
 	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`id` IN (?)", ids).Find(&results).Error
+	
+	return
+}
+ 
+// GetFromStuid 通过stuid获取内容  
+func (obj *_UserMgr) GetFromStuid(stuid string) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` = ?", stuid).Find(&results).Error
+	
+	return
+}
+
+// GetBatchFromStuid 批量查找 
+func (obj *_UserMgr) GetBatchFromStuid(stuids []string) (results []*User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` IN (?)", stuids).Find(&results).Error
 	
 	return
 }
@@ -247,20 +261,6 @@ func (obj *_UserMgr) GetBatchFromStatus(statuss []uint8) (results []*User, err e
 	return
 }
  
-// GetFromStuid 通过stuid获取内容  
-func (obj *_UserMgr) GetFromStuid(stuid string) (results []*User, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` = ?", stuid).Find(&results).Error
-	
-	return
-}
-
-// GetBatchFromStuid 批量查找 
-func (obj *_UserMgr) GetBatchFromStuid(stuids []string) (results []*User, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` IN (?)", stuids).Find(&results).Error
-	
-	return
-}
- 
  //////////////////////////primary index case ////////////////////////////////////////////
  
  // FetchByPrimaryKey primary or index 获取唯一内容
@@ -273,6 +273,13 @@ func (obj *_UserMgr) GetBatchFromStuid(stuids []string) (results []*User, err er
  // FetchUniqueByID primary or index 获取唯一内容
  func (obj *_UserMgr) FetchUniqueByID(id int ) (result User, err error) {
 	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`id` = ?", id).First(&result).Error
+	
+	return
+}
+ 
+ // FetchUniqueIndexByUniquevar primary or index 获取唯一内容
+ func (obj *_UserMgr) FetchUniqueIndexByUniquevar(stuid string ,nickname string ,email string ,telephone string ) (result User, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(User{}).Where("`stuid` = ? AND `nickname` = ? AND `email` = ? AND `telephone` = ?", stuid , nickname , email , telephone).First(&result).Error
 	
 	return
 }

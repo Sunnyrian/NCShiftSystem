@@ -91,6 +91,11 @@ func (obj *_OccupationMgr) WithTimePeriod(timePeriod int) Option {
 	return optionFunc(func(o *options) { o.query["time_period"] = timePeriod })
 }
 
+// WithEvent event获取 
+func (obj *_OccupationMgr) WithEvent(event string) Option {
+	return optionFunc(func(o *options) { o.query["event"] = event })
+}
+
 // WithStatus status获取 
 func (obj *_OccupationMgr) WithStatus(status bool) Option {
 	return optionFunc(func(o *options) { o.query["status"] = status })
@@ -311,6 +316,36 @@ func (obj *_OccupationMgr) GetFromTimePeriod(timePeriod int) (results []*Occupat
 // GetBatchFromTimePeriod 批量查找 
 func (obj *_OccupationMgr) GetBatchFromTimePeriod(timePeriods []int) (results []*Occupation, err error) {
 	err = obj.DB.WithContext(obj.ctx).Model(Occupation{}).Where("`time_period` IN (?)", timePeriods).Find(&results).Error
+	if err == nil && obj.isRelated {
+		for i := 0; i < len(results); i++ {  
+		if err = obj.NewDB().Table("user").Where("id = ?", results[i].UserID).Find(&results[i].User).Error; err != nil { //  
+				if err != gorm.ErrRecordNotFound { // 非 没找到
+					return
+				}
+			}  
+	}
+}
+	return
+}
+ 
+// GetFromEvent 通过event获取内容  
+func (obj *_OccupationMgr) GetFromEvent(event string) (results []*Occupation, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Occupation{}).Where("`event` = ?", event).Find(&results).Error
+	if err == nil && obj.isRelated {
+		for i := 0; i < len(results); i++ {  
+		if err = obj.NewDB().Table("user").Where("id = ?", results[i].UserID).Find(&results[i].User).Error; err != nil { //  
+				if err != gorm.ErrRecordNotFound { // 非 没找到
+					return
+				}
+			}  
+	}
+}
+	return
+}
+
+// GetBatchFromEvent 批量查找 
+func (obj *_OccupationMgr) GetBatchFromEvent(events []string) (results []*Occupation, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Occupation{}).Where("`event` IN (?)", events).Find(&results).Error
 	if err == nil && obj.isRelated {
 		for i := 0; i < len(results); i++ {  
 		if err = obj.NewDB().Table("user").Where("id = ?", results[i].UserID).Find(&results[i].User).Error; err != nil { //  

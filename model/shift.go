@@ -140,6 +140,7 @@ User	User	`gorm:"joinForeignKey:user_id;foreignKey:id;references:UserID" json:"u
 Week	int	`gorm:"column:week" json:"week"`			
 Weekday	int	`gorm:"column:weekday" json:"weekday"`			
 TimePeriod	int	`gorm:"column:time_period" json:"timePeriod"`			
+Event	string	`gorm:"column:event" json:"event"`			
 Status	bool	`gorm:"column:status" json:"status"`			
 }		
 
@@ -156,6 +157,7 @@ var OccupationColumns = struct {
 	Week string
 	Weekday string
 	TimePeriod string
+	Event string
 	Status string    
 	}{ 
 		ID:"id",  
@@ -163,6 +165,7 @@ var OccupationColumns = struct {
 		Week:"week",  
 		Weekday:"weekday",  
 		TimePeriod:"time_period",  
+		Event:"event",  
 		Status:"status",             
 	}
 	
@@ -246,13 +249,13 @@ var ShiftColumns = struct {
 // User [...]		
 type	User	struct {		
 ID	int	`gorm:"primaryKey;column:id" json:"-"`			
+Stuid	string	`gorm:"column:stuid" json:"stuid"`			
 Nickname	string	`gorm:"column:nickname" json:"nickname"`			
 Name	string	`gorm:"column:name" json:"name"`			
 Password	string	`gorm:"column:password" json:"password"`			
 Email	string	`gorm:"column:email" json:"email"`			
 Telephone	string	`gorm:"column:telephone" json:"telephone"`			
 Status	uint8	`gorm:"column:status" json:"status"`			
-Stuid	string	`gorm:"column:stuid" json:"stuid"`			
 }		
 
 // TableName get sql table name.获取数据库表名
@@ -264,22 +267,22 @@ func (m *User) TableName() string {
 // UserColumns get sql column name.获取数据库列名
 var UserColumns = struct { 
 	ID string
+	Stuid string
 	Nickname string
 	Name string
 	Password string
 	Email string
 	Telephone string
-	Status string
-	Stuid string    
+	Status string    
 	}{ 
 		ID:"id",  
+		Stuid:"stuid",  
 		Nickname:"nickname",  
 		Name:"name",  
 		Password:"password",  
 		Email:"email",  
 		Telephone:"telephone",  
-		Status:"status",  
-		Stuid:"stuid",             
+		Status:"status",             
 	}
 	
 

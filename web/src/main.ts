@@ -15,4 +15,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 // app.use(ElementPlus)
 app.use(router)
 app.mount('#app')
-// axios.defaults.baseURL = 'http://localhost:80';
+axios.defaults.baseURL = 'http://localhost:3500';

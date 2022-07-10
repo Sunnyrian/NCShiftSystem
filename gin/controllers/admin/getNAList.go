@@ -11,7 +11,12 @@ import (
 func (con Controller) GetNAList(c *gin.Context) {
 	db := model.DB
 	var user []model.User
-	db.Select("stuid", "nickname", "name", "email", "telephone", "status").Find(&user)
+	status := c.Query("status")
+	if status == "*" {
+		db.Select("stuid", "nickname", "name", "email", "telephone", "status").Find(&user)
+	} else {
+		db.Select("stuid", "nickname", "name", "email", "telephone", "status").Where("status = ?", status).Find(&user)
+	}
 	//result := db.Find(&user)
 	//for i := int64(0); i < result.RowsAffected ; i ++ {
 	//	fmt.Println(user[i].ID)

@@ -45,14 +45,9 @@ const routes: Array<RouteRecordRaw> = [
         component: Admin,
         children: [
             {
-                path: 'NAList',
+                path: 'NAList/:status',
                 name: 'NAList',
                 component: NAList,
-            },
-            {
-                path: 'VirtualTable',
-                name: 'VirtualTable',
-                component: VirtualTable,
             },
         ]
     },
