@@ -57,11 +57,12 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
         beforeEnter: (to, from) => {
-            if (adminStatus) {
-                return true
-            } else {
-                return { name: 'NotAdmin'}
+            if(from.name != 'Admin') {
+                checkLogin().then(() => {
+                    changeRouteToAdmin(adminStatus)
+                })
             }
+            
         },
     },
 ]
@@ -70,6 +71,7 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: routes,
 })
+
 
 let loginStatus:boolean
 let adminStatus:boolean
@@ -108,6 +110,14 @@ function changeRouteToHome (loginStatus: boolean) {
     }
 }
 
+function changeRouteToAdmin (adminStatus: boolean) {
+    if(adminStatus){
+        router.push('/Admin')
+    } else {
+        router.push('/NotAdmin')
+    }
+}
+
 async function checkLogin() {
 
     var config = {
@@ -119,6 +129,7 @@ async function checkLogin() {
     .then(function (response:any) {
         loginStatus = response.data.success
         adminStatus = response.data.admin
+        return adminStatus
     })
     .catch(function (error:any) {
     console.log(error);

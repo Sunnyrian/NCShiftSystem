@@ -10,7 +10,7 @@
     <div>学号:{{ user.stuID }}</div>
     <div>昵称:{{ user.nickname }}</div>
     <div>电话:{{ user.telephone }}</div>
-    <el-button type="primary" plain @click="logOut">退出登录</el-button>
+    <el-button plain @click="logOut">退出登录</el-button>
   </el-card>
 </template>
 

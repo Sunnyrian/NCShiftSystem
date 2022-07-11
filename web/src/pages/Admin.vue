@@ -33,6 +33,7 @@
           <template #title>钉钉对接</template>
         </el-menu-item>
       </el-menu>
+      <el-button plain @click="logOut">退出登录</el-button>
     </el-col>
     <el-col :span="6">
       <router-view></router-view>
@@ -48,11 +49,15 @@ import {
   Location,
   Setting,
 } from "@element-plus/icons-vue";
-
+import cookie from "../api/cookie";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 
+function logOut() {
+  cookie.remove("token");
+  router.push("/Login");
+}
 
 const isCollapse = ref(true);
 

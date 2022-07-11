@@ -35,9 +35,11 @@
       <el-input
         v-model="user.password"
         type="password"
+        ref="password"
         placeholder="请输入密码"
         show-password
         prefix-icon="Lock"
+        @keyup.enter="login(ruleFormRef)"
       />
     </el-form-item>
     <el-form-item>
@@ -221,7 +223,7 @@ const login = (form: FormInstance | undefined) => {
                 message: "登录成功!",
                 type: "success",
               });
-              router.push("/Admin");
+              router.push('/Admin');
             } else {
               ElMessage({
                 showClose: true,
@@ -277,4 +279,5 @@ async function checkExist(key: string, val: string) {
     console.error(error);
   }
 }
+
 </script>
