@@ -1,7 +1,5 @@
 <template>
-    <h1>
-        404 您所输入的页面不存在~
-    </h1>
+  <h1>401 您目前登录的不是管理员账号~</h1>
   <el-button type="primary" @click="backToHome">点击返回主页</el-button>
 </template>
 

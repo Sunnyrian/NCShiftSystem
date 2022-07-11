@@ -23,7 +23,7 @@ func (con Controller) Login(c *gin.Context) {
 	} else {
 		db.Where("stuid = ?", form.StuID).Find(&user)
 		if user.Password == form.Password {
-			token, err := jwt.GenerateToken(form.StuID)
+			token, err := jwt.GenerateToken(form.StuID, false)
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"code": -1,
@@ -34,7 +34,7 @@ func (con Controller) Login(c *gin.Context) {
 			c.SetCookie("token", token, 10800, "", "", false, false)
 			c.JSON(http.StatusOK, gin.H{
 				"success": true,
-				"token": token,
+				//"token": token,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{

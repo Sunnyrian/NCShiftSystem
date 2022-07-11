@@ -7,7 +7,7 @@ import (
 type	AdminUser	struct {		
 Nickname	string	`gorm:"primaryKey;column:nickname" json:"-"`			
 Password	string	`gorm:"column:password" json:"password"`			
-Stauts	bool	`gorm:"column:stauts" json:"stauts"`			
+Status	bool	`gorm:"column:status" json:"status"`			
 }		
 
 // TableName get sql table name.获取数据库表名
@@ -20,11 +20,11 @@ func (m *AdminUser) TableName() string {
 var AdminUserColumns = struct { 
 	Nickname string
 	Password string
-	Stauts string    
+	Status string    
 	}{ 
 		Nickname:"nickname",  
 		Password:"password",  
-		Stauts:"stauts",             
+		Status:"status",             
 	}
 	
 // DutyHour2 VIEW		
@@ -243,6 +243,30 @@ var ShiftColumns = struct {
 		Week:"week",  
 		Weekday:"weekday",  
 		TimePeriod:"time_period",  
+		Status:"status",             
+	}
+	
+// Term [...]		
+type	Term	struct {		
+Term	string	`gorm:"primaryKey;column:term" json:"-"`			
+StartDate	datatypes.Date	`gorm:"column:start_date" json:"startDate"`			
+Status	bool	`gorm:"column:status" json:"status"`			
+}		
+
+// TableName get sql table name.获取数据库表名
+func (m *Term) TableName() string {
+	return "term"
+}
+	
+
+// TermColumns get sql column name.获取数据库列名
+var TermColumns = struct { 
+	Term string
+	StartDate string
+	Status string    
+	}{ 
+		Term:"term",  
+		StartDate:"start_date",  
 		Status:"status",             
 	}
 	

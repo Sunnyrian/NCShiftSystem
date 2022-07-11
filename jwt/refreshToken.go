@@ -20,7 +20,7 @@ func RefreshToken(tokenStr string) (string, error) {
 	if claims, ok := token.Claims.(*UserClaims); ok && token.Valid{
 		jwt.TimeFunc = time.Now
 		claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Hour * 3))
-		return GenerateToken(claims.StuID)
+		return GenerateToken(claims.StuID, false)
 	}
 	return "", errors.New("couldn't handle this token")
 }

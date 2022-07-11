@@ -1,8 +1,8 @@
 package	model	
 import (	
+"gorm.io/gorm"	
 "fmt"	
 "context"	
-"gorm.io/gorm"	
 )	
 
 type _DutyHourThreeMgr struct {

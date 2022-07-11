@@ -23,7 +23,7 @@ func (con Controller) AdminLogin(c *gin.Context) {
 	} else {
 		db.Where("nickname = ?", form.Nickname).Find(&admin)
 		if admin.Password == form.Password {
-			token, err := jwt.GenerateToken(form.Nickname)
+			token, err := jwt.GenerateToken(form.Nickname, true)
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"code": -1,

@@ -62,9 +62,9 @@ func (obj *_AdminUserMgr) WithPassword(password string) Option {
 	return optionFunc(func(o *options) { o.query["password"] = password })
 }
 
-// WithStauts stauts获取 
-func (obj *_AdminUserMgr) WithStauts(stauts bool) Option {
-	return optionFunc(func(o *options) { o.query["stauts"] = stauts })
+// WithStatus status获取 
+func (obj *_AdminUserMgr) WithStatus(status bool) Option {
+	return optionFunc(func(o *options) { o.query["status"] = status })
 }
 
 
@@ -152,16 +152,16 @@ func (obj *_AdminUserMgr) GetBatchFromPassword(passwords []string) (results []*A
 	return
 }
  
-// GetFromStauts 通过stauts获取内容  
-func (obj *_AdminUserMgr) GetFromStauts(stauts bool) (results []*AdminUser, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(AdminUser{}).Where("`stauts` = ?", stauts).Find(&results).Error
+// GetFromStatus 通过status获取内容  
+func (obj *_AdminUserMgr) GetFromStatus(status bool) (results []*AdminUser, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(AdminUser{}).Where("`status` = ?", status).Find(&results).Error
 	
 	return
 }
 
-// GetBatchFromStauts 批量查找 
-func (obj *_AdminUserMgr) GetBatchFromStauts(stautss []bool) (results []*AdminUser, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(AdminUser{}).Where("`stauts` IN (?)", stautss).Find(&results).Error
+// GetBatchFromStatus 批量查找 
+func (obj *_AdminUserMgr) GetBatchFromStatus(statuss []bool) (results []*AdminUser, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(AdminUser{}).Where("`status` IN (?)", statuss).Find(&results).Error
 	
 	return
 }

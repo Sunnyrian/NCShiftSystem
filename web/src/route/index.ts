@@ -7,6 +7,7 @@ import Admin from '../pages/Admin.vue';
 import NAList from '../components/NAList.vue';
 import NotFound from '../pages/NotFound.vue'
 import VirtualTable from '../components/VirtualTable.vue'
+import NotAdmin from '../pages/NotAdmin.vue'
 
 import { tr } from 'element-plus/lib/locale'
 import axios from 'axios'
@@ -40,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         component: Home,
     },
     {
+        path: '/NotAdmin',
+        name: 'NotAdmin',
+        component: NotAdmin,
+    },
+    {
         path: '/Admin',
         name: 'Admin',
         component: Admin,
@@ -49,7 +55,14 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'NAList',
                 component: NAList,
             },
-        ]
+        ],
+        beforeEnter: (to, from) => {
+            if (adminStatus) {
+                return true
+            } else {
+                return { name: 'NotAdmin'}
+            }
+        },
     },
 ]
 
@@ -59,6 +72,7 @@ const router = createRouter({
 })
 
 let loginStatus:boolean
+let adminStatus:boolean
 
 router.beforeEach((to, from) => {
 
@@ -104,6 +118,7 @@ async function checkLogin() {
     await axios(config)
     .then(function (response:any) {
         loginStatus = response.data.success
+        adminStatus = response.data.admin
     })
     .catch(function (error:any) {
     console.log(error);

@@ -9,10 +9,9 @@
   <el-button type="primary" @click="getTableData">Update</el-button>
 </template>
 
-
 <script lang="ts" setup>
 import axios from "axios";
-import { reactive, ref } from "vue";
+import { watch, reactive, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 const columns = [
@@ -54,7 +53,7 @@ const columns = [
   },
 ];
 
-let tableData = ref([]);
+let tableData = ref(['']);
 const route = useRoute()
 
 function getNAList(status: string | string[]) {
@@ -65,9 +64,7 @@ function getNAList(status: string | string[]) {
 
   axios(config)
     .then(function (response) {
-      console.log("response:", response.data);
       tableData.value = response.data;
-      console.log("tableData:", tableData);
     })
     .catch(function (error) {
       console.log(error);
@@ -78,4 +75,11 @@ getNAList(route.params.status);
 function getTableData() {
     console.log("now the TableData is:",tableData)
 }
+
+watch(() => route.params.status,
+  (val, preVal) =>{
+    getNAList(route.params.status)
+  }
+)
+
 </script>
