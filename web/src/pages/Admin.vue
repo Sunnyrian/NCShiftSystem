@@ -28,8 +28,12 @@
           <el-icon><List /></el-icon>
           <template #title>空闲系统</template>
         </el-menu-item>
-        <el-menu-item index="dingding">
+        <el-menu-item index="setting">
           <el-icon><setting /></el-icon>
+          <template #title>系统设置</template>
+        </el-menu-item>
+        <el-menu-item index="dingding">
+          <el-icon><Link /></el-icon>
           <template #title>钉钉对接</template>
         </el-menu-item>
       </el-menu>
@@ -48,6 +52,7 @@ import {
   Menu as IconMenu,
   Location,
   Setting,
+  Link,
 } from "@element-plus/icons-vue";
 import cookie from "../api/cookie";
 import { useRouter, useRoute } from "vue-router";

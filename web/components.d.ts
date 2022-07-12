@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     NAList: typeof import('./src/components/NAList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Shift: typeof import('./src/components/Shift.vue')['default']
   }
 }
 
