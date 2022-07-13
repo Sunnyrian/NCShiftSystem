@@ -12,7 +12,9 @@ func AdminRoutersInit(r *gin.Engine)  {
 	adminRouters := r.Group("/adminApi",middlewares.JwtAdminAuth())
 	{
 		//adminRouters.GET("/",admin.IndexController{}.Index)
-		adminRouters.POST("/shift",admin.Controller{}.Shift)
-		adminRouters.GET("/NAList",admin.Controller{}.GetNAList)
+		adminRouters.POST("/shift", admin.Controller{}.Shift)
+		adminRouters.GET("/NAList", admin.Controller{}.GetNAList)
+		adminRouters.GET("/getEnv", admin.Controller{}.GetEnv)
+		adminRouters.POST("modifyEnv", admin.Controller{}.ModifyEnv)
 	}
 }

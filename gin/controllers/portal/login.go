@@ -20,13 +20,16 @@ func (con Controller) Login(c *gin.Context) {
 	var user model.User
 	if err != nil {
 		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+		})
 	} else {
 		db.Where("stuid = ?", form.StuID).Find(&user)
 		if user.Password == form.Password {
 			token, err := jwt.GenerateToken(form.StuID, false)
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
-					"code": -1,
+					"success": false,
 					"msg": err,
 				})
 				return
