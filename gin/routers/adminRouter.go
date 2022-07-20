@@ -15,6 +15,6 @@ func AdminRoutersInit(r *gin.Engine)  {
 		adminRouters.POST("/shift", admin.Controller{}.Shift)
 		adminRouters.GET("/NAList", admin.Controller{}.GetNAList)
 		adminRouters.GET("/getEnv", admin.Controller{}.GetEnv)
-		adminRouters.POST("modifyEnv", admin.Controller{}.ModifyEnv)
+		adminRouters.POST("/modifyEnv", admin.Controller{}.ModifyEnv)
 	}
 }

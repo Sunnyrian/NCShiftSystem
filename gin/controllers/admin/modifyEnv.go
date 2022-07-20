@@ -2,6 +2,7 @@ package admin
 
 import (
 	"NCShiftSystem/const"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -19,6 +20,7 @@ func (con Controller) ModifyEnv(c *gin.Context){
 	if err != nil {
 		log.Println(err)
 	}
+	fmt.Println(form)
 	if shiftConst.ModifyEnv(form.Key, form.Value) {
 		c.JSON(http.StatusOK, gin.H{
 			"success": true,

@@ -19,21 +19,25 @@
           </el-menu-item-group>
         </el-sub-menu>
 
-        <el-menu-item index="shift">
+        <el-menu-item index="/shift">
           <el-icon><icon-menu /></el-icon>
           <template #title>班次管理</template>
         </el-menu-item>
 
-        <el-menu-item index="ot">
+        <el-menu-item index="/ot">
           <el-icon><List /></el-icon>
           <template #title>空闲系统</template>
         </el-menu-item>
-        <el-menu-item index="setting">
+        <el-menu-item index="/Admin/setting">
           <el-icon><setting /></el-icon>
           <template #title>系统设置</template>
         </el-menu-item>
-        <el-menu-item index="dingding">
-          <el-icon><Link /></el-icon>
+        <el-menu-item index="/log">
+          <el-icon><Document /></el-icon>
+          <template #title>日志文件</template>
+        </el-menu-item>
+        <el-menu-item index="/dingding">
+          <el-icon><Bell /></el-icon>
           <template #title>钉钉对接</template>
         </el-menu-item>
       </el-menu>
@@ -52,7 +56,7 @@ import {
   Menu as IconMenu,
   Location,
   Setting,
-  Link,
+  Bell,
 } from "@element-plus/icons-vue";
 import cookie from "../api/cookie";
 import { useRouter, useRoute } from "vue-router";
