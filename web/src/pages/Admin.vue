@@ -29,7 +29,7 @@
           <template #title>空闲系统</template>
         </el-menu-item>
         <el-menu-item index="/Admin/setting">
-          <el-icon><setting /></el-icon>
+          <el-icon><Setting /></el-icon>
           <template #title>系统设置</template>
         </el-menu-item>
         <el-menu-item index="/log">
@@ -51,13 +51,14 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-  Bell,
-} from "@element-plus/icons-vue";
+// import {
+//   Document,
+//   Menu as IconMenu,
+//   Location,
+//   Avatar,
+//   Setting,
+//   Bell,
+// } from "@element-plus/icons-vue";
 import cookie from "../api/cookie";
 import { useRouter, useRoute } from "vue-router";
 
